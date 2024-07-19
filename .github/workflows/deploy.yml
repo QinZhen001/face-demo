@@ -21,7 +21,7 @@ jobs:
           yarn
           yarn build
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4
+        uses: JamesIves/github-pages-deploy-action@4.6.3
         with:
           folder: dist # The folder the action should deploy.
 
