@@ -2,7 +2,10 @@ import * as faceapi from '@vladmandic/face-api/dist/face-api.esm.js';
 import { useEffect, useState } from 'react'
 import "./index.css"
 
-const modelPath = './model';
+
+// model just you real need  
+const modelPath = './need-model';
+
 const minScore = 0.2; // minimum score
 const maxResults = 5; // maximum number of results to return
 let optionsSSDMobileNet;
@@ -31,10 +34,10 @@ function App() {
 
   const setupFaceAPI = async () => {
     await faceapi.nets.ssdMobilenetv1.load(modelPath);
-    await faceapi.nets.ageGenderNet.load(modelPath);
-    await faceapi.nets.faceLandmark68Net.load(modelPath);
-    await faceapi.nets.faceRecognitionNet.load(modelPath);
-    await faceapi.nets.faceExpressionNet.load(modelPath);
+    // await faceapi.nets.ageGenderNet.load(modelPath);
+    // await faceapi.nets.faceLandmark68Net.load(modelPath);
+    // await faceapi.nets.faceRecognitionNet.load(modelPath);
+    // await faceapi.nets.faceExpressionNet.load(modelPath);
 
     optionsSSDMobileNet = new faceapi.SsdMobilenetv1Options({ minConfidence: minScore, maxResults });
   }
@@ -102,10 +105,10 @@ function App() {
     const t0 = performance.now();
     faceapi
       .detectAllFaces(video, optionsSSDMobileNet)
-      .withFaceLandmarks()
-      // .withFaceExpressions()
-      // .withFaceDescriptors()
-      // .withAgeAndGender()
+      // .withFaceLandmarks() // 人脸关键点
+      // .withFaceExpressions() 情感表达
+      // .withFaceDescriptors() // 描述
+      // .withAgeAndGender()  年龄和性别
       .then((result) => {
         console.log("result", result)
         const fps = 1000 / (performance.now() - t0);
@@ -137,7 +140,7 @@ function App() {
       ctx.fillStyle = 'deepskyblue';
       ctx.globalAlpha = 0.6;
       ctx.beginPath();
-      ctx.rect(person.detection.box.x, person.detection.box.y, person.detection.box.width, person.detection.box.height);
+      ctx.rect(person.box.x, person.box.y, person.box.width, person.box.height);
       ctx.stroke();
       ctx.globalAlpha = 1;
       // draw text labels
@@ -157,12 +160,12 @@ function App() {
       // draw face points for each face
       ctx.globalAlpha = 0.8;
       ctx.fillStyle = 'lightblue';
-      const pointSize = 2;
-      for (let i = 0;i < person.landmarks.positions.length;i++) {
-        ctx.beginPath();
-        ctx.arc(person.landmarks.positions[i].x, person.landmarks.positions[i].y, pointSize, 0, 2 * Math.PI);
-        ctx.fill();
-      }
+      // const pointSize = 2;
+      // for (let i = 0;i < person.landmarks.positions.length;i++) {
+      //   ctx.beginPath();
+      //   ctx.arc(person.landmarks.positions[i].x, person.landmarks.positions[i].y, pointSize, 0, 2 * Math.PI);
+      //   ctx.fill();
+      // }
     }
   }
 

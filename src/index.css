@@ -3,6 +3,8 @@ html, body {
   height: 100vh;
   background-color: rebeccapurple;
   overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 
